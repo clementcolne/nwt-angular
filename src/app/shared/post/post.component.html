@@ -1,0 +1,88 @@
+<mat-card>
+  <mat-card-header>
+    <!-- author of the post -->
+    <mat-card-title>
+      <a routerLink="profil/{{ author.username }}">{{ author.username }}</a>
+    </mat-card-title>
+    <!-- profile picture of the author -->
+    <img mat-card-avatar src="{{ getProfilePicture(author) }}" alt="profile picture">
+
+    <!-- location -->
+    <mat-card-subtitle *ngIf="post?.location">
+      <i class="material-icons inline-icon">location_pin</i>
+      {{ post?.location }}
+    </mat-card-subtitle>
+
+    <span class="to-right"></span>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngIf="author.username === connectedUser.username" (click)="deletePost()">
+        <mat-icon>delete_outline</mat-icon>
+        <span>Supprimer</span>
+      </button>
+        <a mat-menu-item class="twitter-share-button"
+           href="{{ shareOnTwitter }}">
+          <mat-icon>share</mat-icon>
+          Partager sur twitter
+        </a>
+    </mat-menu>
+
+  </mat-card-header>
+
+  <!-- image of the post -->
+  <img *ngIf="post.mediaType === 'image'" [src]=getMedia mat-card-image alt="image of the post">
+  <!-- video of the post -->
+  <video *ngIf="post.mediaType === 'video'" class="mb-3" controls>
+    Votre navigateur ne supporte pas les vidéos.
+    <source [src]="getMedia">
+  </video>
+
+  <!-- buttons of the post -->
+  <mat-card-actions class="mt-neg mb-neg">
+
+    <!-- like -->
+    <button mat-icon-button [color]="likeColor" (click)="clickLike()">
+      <mat-icon>thumb_up</mat-icon>
+    </button>
+
+  </mat-card-actions>
+
+  <mat-card-content>
+
+    <!-- number of likes -->
+    <section class="mb-2">
+      {{ post.likes }} j'aime
+    </section>
+
+    <!-- Description -->
+    <section class="mb-2">
+      {{ post.description }}
+    </section>
+
+    <!-- existing comments -->
+    <section>
+      <section *ngIf="post.nbComments == 0" class="firstComment">
+        Sois le premier à commencer le post
+      </section>
+      <section *ngIf="post.nbComments != 0">
+        <a *ngIf="!isCommentsLoaded" (click)="lazyLoadComments()" class="lazyLoadComments">{{ commentsLoadInfo }}</a>
+        <section *ngFor="let comment of comments">
+          <app-comment [comment]="comment"></app-comment>
+        </section>
+      </section>
+    </section>
+
+    <!-- add new comment -->
+    <section>
+      <mat-form-field appearance="standard">
+        <mat-label>Ajouter un commentaire...</mat-label>
+        <input (keydown.enter)="addComment()" [(ngModel)]="newComment" matInput maxlength="256">
+      </mat-form-field>
+    </section>
+
+  </mat-card-content>
+
+</mat-card>

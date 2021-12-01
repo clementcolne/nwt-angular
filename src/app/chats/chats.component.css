@@ -1,0 +1,27 @@
+a:hover {
+  cursor: pointer;
+}
+
+.content {
+  color: gray;
+  font-size: 1.3em;
+  line-height: 1.5em;
+  text-align: center;
+}
+
+
+.placeholder{
+  color: gray;
+}
+
+/**
+  Profile picture icon in search autocomplete css
+ */
+.profil-picture-option{
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  vertical-align: middle;
+  margin-right: 1vh;
+  cursor: pointer;
+}

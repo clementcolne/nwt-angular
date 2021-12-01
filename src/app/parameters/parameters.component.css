@@ -1,0 +1,52 @@
+.margin-left {
+  margin-left: 20px;
+}
+
+.profil-picture-avatar {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.center {
+  text-align: center;
+}
+
+.center-vertically {
+  margin:0 auto;
+  display:block;
+}
+
+label {
+  box-sizing: border-box;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: baseline;
+  text-align: center;
+  margin: 0;
+  min-width: 64px;
+  line-height: 36px;
+  padding: 0 16px;
+  border-radius: 4px;
+  overflow: visible;
+  border: 1px solid rgba(0,0,0,.26);
+}
+
+.confirmUpdate{
+  color : green;
+}
+
+.align {
+  text-align: center;
+}

@@ -1,0 +1,47 @@
+/**
+  Makes the form 100% width of container
+ */
+mat-form-field {
+  width: 100%;
+}
+
+/**
+  Negative top margin
+ */
+.mt-neg {
+  margin-top: -25px;
+}
+
+/**
+  Negative bottom margin
+ */
+.mb-neg {
+  margin-bottom: -5px;
+}
+
+/**
+  Makes elements go to right
+ */
+.right {
+  float: right;
+}
+
+.lazyLoadComments {
+  color: grey;
+  cursor: pointer;
+}
+
+.firstComment {
+  color: grey;
+}
+
+/**
+  Makes elements go to right
+ */
+.to-right {
+  flex: 1 1 auto;
+}
+
+a:hover {
+  text-decoration: underline;
+}

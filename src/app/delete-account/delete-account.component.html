@@ -1,0 +1,14 @@
+<mat-card>
+  <!-- title -->
+  <mat-card-title>
+    Êtres-vous sûr de vouloir supprimer votre compte ?
+  </mat-card-title>
+
+  <mat-card-content class="mt-3">
+    <mat-card-subtitle>Attention, cette action entraîne la suppression définitive et irréversible de toutes vos données et posts.</mat-card-subtitle>
+    <!-- confirm delete -->
+  <button mat-stroked-button color="warn" (click)="confirm()">Supprimer mon compte</button>
+    <!-- cancel delete -->
+  <button class="center-button margin-left" mat-stroked-button (click)="cancel()">Annuler</button>
+  </mat-card-content>
+</mat-card>

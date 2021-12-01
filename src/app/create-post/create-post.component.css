@@ -1,0 +1,53 @@
+.margin-top {
+  margin-top: 10vh;
+}
+
+mat-form-field {
+  width: 60%;
+}
+
+/**
+  Center the title of the card
+ */
+mat-card-title {
+  text-align: center;
+}
+
+.center-elements {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mr {
+  margin-right: 2vh;
+}
+
+.fix-max-size {
+  max-height: 80vh;
+}
+
+label {
+  box-sizing: border-box;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: baseline;
+  text-align: center;
+  margin: 0;
+  min-width: 64px;
+  line-height: 36px;
+  padding: 0 16px;
+  border-radius: 4px;
+  overflow: visible;
+  border: 1px solid rgba(0,0,0,.26);
+}

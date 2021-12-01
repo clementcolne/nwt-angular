@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row">
+
+    <div class="offset-lg-3 col-lg-6 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-1 col-10">
+      <mat-card class="margin-top">
+        <mat-card-title>
+          Connexion
+        </mat-card-title>
+
+        <!-- login form -->
+        <div class="row">
+          <div class="offset-md-2 col-md-8">
+            <form novalidate [formGroup]="form">
+
+              <!-- username -->
+              <mat-form-field>
+                <input matInput placeholder="Pseudo" required name="username" formControlName="username"/>
+              </mat-form-field>
+
+              <!-- password -->
+              <mat-form-field>
+                <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Mot de passe" required name="password" formControlName="password"/>
+                <div mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                  <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </div>
+              </mat-form-field>
+
+              <!-- login error -->
+              <mat-error *ngIf="errorConnection()">
+                Pseudo ou mot de passe erroné.
+              </mat-error>
+
+              <!-- submit login -->
+              <button class="center-button" mat-stroked-button type="submit" (click)="submit(form.value)">Connexion</button>
+            </form>
+            <hr>
+            <!-- create account link -->
+            <span>Vous n'avez pas encore de compte ? <a routerLink="/creer-compte">Inscrivez-vous</a>.</span>
+
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+  </div>
+</div>

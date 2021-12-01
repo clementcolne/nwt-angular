@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="offset-lg-1 col-lg-10 offset-md-1 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
+      <mat-card class="margin-top">
+        <mat-card-title>
+          Créer une nouvelle publication
+        </mat-card-title>
+
+        <!-- add-post form -->
+        <form novalidate [formGroup]="form" class="center-elements mt-4">
+          <!-- upload picture -->
+          <label for="file" class="btn">
+            <span>
+              <mat-icon class="inline-icon" aria-hidden="false" aria-label="Example home icon">file_upload</mat-icon>
+              Sélectionner sur l'ordinateur
+            </span>
+          </label>
+          <input type="file" id="file" #image style="visibility:hidden;" (change)="onChangeFile($event)" accept="image/*, video/*">
+          <img class="fix-max-size" mat-card-image *ngIf='imgUrl !== ""' [src]="imgUrl" alt="preview">
+          <video *ngIf="videoUrl" controls>
+            <source [src]="videoUrl">
+            Votre navigateur ne supporte pas les vidéos.
+          </video>
+
+          <!-- description -->
+          <mat-form-field *ngIf="imgUrl !== '' || videoUrl" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput type="text" formControlName="description" placeholder="Ex : Vacances à la mer"></textarea>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="imgUrl !== '' || videoUrl" class="full-width">
+            <mat-label>Localisation</mat-label>
+            <input matInput type="text" formControlName="location" placeholder="Ex : Marseille, France">
+          </mat-form-field>
+
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <!-- cancel -->
+              <button class="mr" mat-stroked-button type="submit" color="warn" (click)="cancel()" [disabled]="!isFilled">Annuler</button>
+              <!-- submit post -->
+              <button mat-stroked-button type="submit" (click)="sumbit(form.value)" [disabled]="!isFilled">Créer la publication</button>
+            </div>
+          </div>
+        </form>
+
+      </mat-card>
+    </div>
+
+  </div>
+</div>

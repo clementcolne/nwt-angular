@@ -1,0 +1,17 @@
+/**
+  Makes line break when the string is longer than the element
+ */
+.comments {
+  word-break: break-all;
+}
+
+/**
+  Makes author's font bold
+ */
+.author {
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}

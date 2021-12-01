@@ -1,0 +1,40 @@
+/**
+  Center the title of the card
+ */
+mat-card-header {
+  text-align: center;
+}
+
+/**
+  Center the button
+ */
+.center-button {
+  margin-left: 25%;
+  width: 50%;
+}
+
+/**
+  Decoration of hr
+ */
+hr {
+  border: 0;
+  border-top: 1px solid #8c8c8c;
+  border-bottom: 2px solid #fff;
+  width: 60%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/**
+  Custom <a> (color + underline on hover)
+ */
+a {
+  color: #009eff;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.margin-top {
+ margin-top: 25vh;
+}

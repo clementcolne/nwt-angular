@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-lg-12">
+      <mat-card>
+        <!-- title of the card -->
+        <mat-card-title>
+          Conversation avec {{ mateName }}
+        </mat-card-title>
+
+        <div class="row">
+          <div class="offset-md-2 col-md-8">
+
+            <!-- display all messages -->
+            <div *ngFor="let message of messages" class="col-md-12 mt-3">
+              <!-- messages of the connected user -->
+              <ng-container *ngIf="isAuthor(message.src)">
+                <div class="align-right">
+                   {{message.message}} : <strong>moi </strong>
+                </div>
+              </ng-container>
+
+              <!-- messages of the user we are talking with -->
+              <ng-container *ngIf="!isAuthor(message.src)">
+                <strong>{{message.author}} </strong> : {{message.message}}
+              </ng-container>
+            </div>
+
+            <!-- send message input -->
+            <mat-form-field class="mt-4">
+              <mat-label>Ecrire un message ...</mat-label>
+              <textarea matInput [(ngModel)]="message" (keydown.enter)="addChat()"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+  </div>
+</div>
+</div>

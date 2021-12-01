@@ -1,0 +1,74 @@
+<mat-toolbar class="sticky nav">
+  <a routerLink=""><span>Amstramgram</span></a>
+
+
+  <!-- aligns all next items to right -->
+  <span class="to-right"></span>
+
+  <mat-form-field class="example-form-field, search-bar" [floatLabel]="'never'" *ngIf="clickedSearch" >
+    <input (keydown.enter)="search()" matInput type="text" [(ngModel)]="searchValue" [formControl]="myControl" [matAutocomplete]="auto"/>
+    <mat-placeholder class="placeholder">Rechercher un utilisateur</mat-placeholder>
+    <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let user of filteredUsers | async" [value]="user.username" (click)="search()">
+        <img class="profil-picture-option" src="{{getProfilePicture(user)}}" alt="{{user.username}} profile picture">
+        <span>{{user.username}}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <ng-container *ngIf="isLogged">
+    <!-- application name/logo -->
+    <button (click)="home()" mat-icon-button aria-label="Home">
+      <mat-icon>home</mat-icon>
+    </button>
+
+    <!-- notifications -->
+    <mat-menu #rootMenu="matMenu">
+      <span>
+        <div *ngFor="let notif of notifs">
+          <span ngSwitch="{{notif.type}}" (click)="readNotifs(notif)">
+            <span mat-menu-item *ngSwitchCase="'like'" routerLink="/post/{{notif.content}}" [ngClass]="notif.isRead ? 'readNotif' : 'unreadNotif'"><a class="link">{{getAuthorName(notif)}}</a> a aimé votre <a class="link">publication</a></span>
+            <span mat-menu-item *ngSwitchCase="'comment'" routerLink="/post/{{notif.content}}" [ngClass]="notif.isRead ? 'readNotif' : 'unReadNotif'"><a class="link">{{getAuthorName(notif)}}</a> a commenté votre <a class="link">post</a></span>
+            <span mat-menu-item *ngSwitchCase="'follow'" routerLink="/profil/{{getAuthorName(notif)}}" [ngClass]="notif.isRead ? 'readNotif' : 'unReadNotif'"><a class="link">{{getAuthorName(notif)}}</a> a commencé à vous suivre</span>
+          </span>
+        </div>
+        <div *ngIf="notifs.length===0">
+          <span mat-menu-item disabled>Aucune notification pour le moment</span>
+        </div>
+      </span>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="rootMenu" aria-label="Access notifications">
+      <mat-icon aria-hidden="false" aria-label="notifications" mat-raised-button matBadge="{{nbUnreadNotif}}" matBadgeHidden="{{nbUnreadNotif==0}}" >notifications_none</mat-icon>
+    </button>
+
+    <!-- add post -->
+    <button mat-icon-button aria-label="Add post">
+      <mat-icon (click)="openDialog()" aria-hidden="false" aria-label="add post">add_to_photos</mat-icon>
+    </button>
+
+    <!-- private messages -->
+    <button mat-icon-button aria-label="Access messages">
+      <mat-icon routerLink="chats" aria-hidden="false" aria-label="messages" mat-raised-button>message</mat-icon>
+    </button>
+
+    <!-- search -->
+    <button mat-icon-button aria-label="Access notifications">
+      <mat-icon (click)="clickedSearch=!clickedSearch" aria-hidden="false" aria-label="notifications" mat-raised-button>search</mat-icon>
+    </button>
+
+    <!-- profile -->
+    <img [matMenuTriggerFor]="menu" mat-card-image src="{{profilePicture}}" class="profil-picture-icon" alt="profile picture avatar">
+    <!-- sub menu for profile -->
+    <mat-menu #menu="matMenu">
+      <button routerLink="profil/{{connectedUser.username}}" mat-menu-item><mat-icon>insert_emoticon</mat-icon>Profil</button>
+      <button mat-menu-item routerLink="parameters"><mat-icon>settings</mat-icon>Paramètres</button>
+      <hr>
+      <button (click)="deconnexion()" mat-menu-item><mat-icon>close</mat-icon>Déconnexion</button>
+    </mat-menu>
+  </ng-container>
+
+</mat-toolbar>

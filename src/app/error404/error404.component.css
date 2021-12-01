@@ -1,0 +1,12 @@
+.info {
+  font-size: 20px;
+}
+
+.link {
+  color: blue;
+  text-decoration: underline blue 1px;
+}
+
+.container {
+  text-align: center;
+}

@@ -1,0 +1,77 @@
+/**
+  Makes elements go to right
+ */
+.to-right {
+  flex: 1 1 auto;
+}
+
+.search-bar{
+  width: 30vh;
+  font-size: 12px;
+}
+
+.placeholder{
+  color: gray;
+}
+
+/**
+  Makes navbar sticky to top
+ */
+.sticky {
+  position: fixed;
+  top: 0;
+}
+
+/**
+  Navbar css
+ */
+.nav {
+  z-index: 1;
+  box-shadow: 0 4px 6px -6px #222;
+}
+
+/**
+  Profile picture icon on navbar css
+ */
+.profil-picture-icon {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/**
+  Profile picture icon in search autocomplete css
+ */
+.profil-picture-option{
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  vertical-align: middle;
+  margin-right: 1vh;
+  cursor: pointer;
+}
+
+/**
+  Decoration of hr
+ */
+hr {
+  border: 0;
+  border-top: 1px solid #8c8c8c;
+  border-bottom: 2px solid #fff;
+  width: 90%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.link{
+  font-weight: bold;
+}
+
+.unreadNotif{
+  background: #b3b3c6;
+}
+

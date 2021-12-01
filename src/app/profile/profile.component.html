@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row">
+    <div class="offset-lg-1 col-lg-10 offset-md-1 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
+
+        <div class="container margin-top">
+
+          <div class="row">
+
+            <!-- profile picture -->
+            <div class="offset-lg-1 col-lg-4 offset-md-1 col-md-6 center">
+              <img class="profil-picture-avatar" src="{{ getProfilePicture(user) }}" alt="profile picture">
+            </div>
+
+            <!-- profile informations -->
+            <div class="col-lg-6 col-md-5 mt-4">
+              <!-- username -->
+              <h1 class="title inline inline-icon">{{ user.username }}</h1>
+              <!-- display follow button if not connected user's account -->
+              <ng-container *ngIf="!isConnectedUserAccount()">
+                <button class="follow" mat-stroked-button (click)="onFollow()">{{ follow }}</button>
+                <button class="follow" mat-stroked-button (click)="onChat()">Ecrire</button>
+              </ng-container>
+              <!-- profile informations -->
+              <div class="mt-4">
+                <span class="profil-info mr">{{ getNbPosts() }} publication(s)</span>
+                <span class="profil-info mr">{{ user.nbFollowers }} abonné(s)</span>
+                <span class="profil-info mr">{{ user.nbFollow }} abonnement(s)</span>
+              </div>
+              <!-- profile description -->
+              <div class="mt-4 profil-info">
+                {{ user.description }}
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- posts of the user if account is public or is connected's user account -->
+          <div class="row mt-4" *ngIf="isAccessible">
+            <ng-container *ngIf="posts.length > 0">
+              <div *ngFor="let post of posts" class="col-lg-4 col-md-6 mb-4">
+                <app-card [post]="post"></app-card>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="getNbPosts()  === 0">
+              <div class="center profil-info mt-4 grey">
+                {{ user.username }} n'a encore posté aucun contenu.
+              </div>
+            </ng-container>
+          </div>
+
+          <!-- account is private && not connected user -->
+          <div class="center profil-info mt-4 grey" *ngIf="!isAccessible">
+            Ce compte est privé, suivez le pour accéder à ses posts.
+          </div>
+
+        </div>
+
+    </div>
+  </div>
+</div>

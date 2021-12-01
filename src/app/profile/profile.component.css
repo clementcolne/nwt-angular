@@ -1,0 +1,40 @@
+.profil-picture-avatar {
+  display: inline-block;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.title {
+  font-size: 30px;
+}
+
+.profil-info {
+  font-size: 18px;
+}
+
+span {
+  font-size: 15px;
+}
+
+.center {
+  text-align: center;
+}
+
+.mr {
+  margin-right: 15px;
+}
+
+.grey {
+ color: grey;
+}
+
+.inline {
+  display: inline;
+}
+
+.follow {
+  margin-left: 15px;
+}

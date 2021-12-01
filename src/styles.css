@@ -1,0 +1,72 @@
+/* import only bootstrap grid */
+@import "assets/css/bootstrap-grid.min.css";
+
+html, body {
+  height: 100%;
+  background-color: rgb(250,250,250);
+}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/**
+  Disable all decorations of links
+ */
+a {
+  text-decoration: none;
+  color: rgba(0,0,0,.87);
+}
+
+/**
+  Makes img responsive
+ */
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+}
+
+/**
+  Makes icon and text inline
+ */
+.inline-icon {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+/**
+  Images contained in a mat-card
+ */
+mat-card > img {
+  max-height: 60vh;
+  object-fit: contain;
+  /*
+   TODO : choose between theses 2 possibilities for img display
+   First one : img much more beautifuxl
+   Second one : all img same size, profils with more pictures much more beautiful
+   object-fit: cover;
+   */
+}
+
+video {
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+}
+
+.margin-top {
+  margin-top: 12vh;
+}
+
+/**
+  Maked the form 100% wide
+ */
+mat-form-field {
+  width: 100%;
+}
+
+/**
+  Center the title of the card
+ */
+mat-card-title {
+  text-align: center;
+}
+
+

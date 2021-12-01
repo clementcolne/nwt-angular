@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+
+    <ng-container *ngIf="posts === undefined || posts.length==0">
+      <div class="offset-lg-3 col-lg-6 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-1 col-10 mb-4 empty-feed margin-top">
+        Vous ne suivez personne pour le moment. Cherchez des connaissances et suivez les pour voir leurs publications dans votre feed :)
+      </div>
+    </ng-container>
+
+    <div class="margin-top" *ngIf="posts !== undefined">
+      <div *ngFor="let post of posts" class="offset-lg-3 col-lg-6 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-1 col-10 mb-4">
+        <app-card [post]="post"></app-card>
+      </div>
+    </div>
+
+  </div>
+
+</div>

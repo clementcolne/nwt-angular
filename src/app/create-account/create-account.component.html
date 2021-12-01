@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="row">
+
+    <div class="offset-lg-3 col-lg-6 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-1 col-10">
+      <mat-card class="margin-top">
+        <mat-card-title>
+          Créer un compte
+        </mat-card-title>
+
+        <div class="row">
+          <div class="offset-md-2 col-md-8">
+            <!-- create account form -->
+            <form novalidate [formGroup]="form" class="sign-up-form">
+
+              <!-- username -->
+              <mat-form-field>
+                <!-- minlength="4"-->
+                <input matInput placeholder="Pseudo" name="username" formControlName="username" maxlength="30" required/>
+                <!-- error if no username -->
+                <mat-error *ngIf="form.get('username')?.dirty && form.get('username')?.hasError('required')">
+                  Un pseudo est <strong>requis</strong>.
+                </mat-error>
+                <!-- error if wrong size of username
+                <mat-error *ngIf="form.get('username')?.dirty && (form.get('username')?.hasError('minlength') || form.get('username')?.hasError('maxlength'))">
+                  La taille du pseudo doit être entre <strong>4 et 30 caractères</strong>.
+                </mat-error>-->
+                <!-- error if wrong pattern of username
+                <mat-error *ngIf="form.get('username')?.dirty && form.get('username')?.hasError('pattern')">
+                  Le pseudo ne peut contenir que des <strong>lettres minuscule, majuscule, chiffres et - _ ou .</strong>
+                </mat-error>-->
+                <!-- easter egg, did you find it ? -->
+                <mat-error *ngIf="form.get('username')?.dirty && form.get('username')?.hasError('forbiddenName')">
+                  Tu as trouvé un Easter Egg, tu ne peux pas t'appeler Clément ;)
+                </mat-error>
+              </mat-form-field>
+
+              <!-- email -->
+              <mat-form-field>
+                <input matInput placeholder="Email" type="email" required name="email" formControlName="email"/>
+                <!-- error if no email -->
+                <mat-error *ngIf="form.get('email')?.dirty && form.get('email')?.hasError('required')">
+                  Un email est <strong>requis</strong>.
+                </mat-error>
+                <!-- error if wrong pattern of email -->
+                <mat-error *ngIf="form.get('email')?.dirty && form.get('email')?.hasError('pattern')">
+                  Le format <strong>email</strong> n'est pas respecté.
+                </mat-error>
+              </mat-form-field>
+
+              <!-- password -->
+              <mat-form-field>
+                <!--minlength="8"-->
+                <input matInput placeholder="Mot de passe" [type]="hide_password ? 'password' : 'text'" required name="password" formControlName="password"  maxlength="30"/>
+                <div mat-icon-button matSuffix (click)="hide_password = !hide_password" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide_password">
+                  <mat-icon>{{hide_password ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </div>
+                <!-- error if no password -->
+                <mat-error *ngIf="form.get('password')?.dirty && form.get('password')?.hasError('required')">
+                  Un mot de passe est <strong>requis</strong>.
+                </mat-error>
+                <!-- error if password doesn't match the pattern
+                <mat-error *ngIf="form.get('password')?.dirty && form.get('password')?.hasError('pattern')">
+                  Le mot de passe doit contenir au moins une <strong>lettre minuscule</strong>, une <strong>lettre majuscule</strong>, un <strong>chiffre</strong> et un <strong>caractère spécial</strong>.
+                </mat-error>-->
+                <!-- error if wrong size of password
+                <mat-error *ngIf="form.get('password')?.dirty && (form.get('password')?.hasError('minlength') || form.get('password')?.hasError('maxlength'))">
+                  La taille du pseudo doit être entre <strong>8 et 30 caractères</strong>.
+                </mat-error> -->
+              </mat-form-field>
+
+              <!-- password confirm -->
+              <mat-form-field>
+                <input matInput placeholder="Confirmation du mot de passe" [type]="hide_password ? 'password' : 'text'" required name="passwordConfirmed" formControlName="passwordConfirmed"/>
+                <div mat-icon-button matSuffix (click)="hide_password = !hide_password" [attr.aria-label]="'Hide confirmed password'" [attr.aria-pressed]="hide_password">
+                  <mat-icon>{{hide_password ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </div>
+                <!-- error if both passwords don't have same value -->
+                <mat-error *ngIf="form.get('passwordConfirmed')?.dirty && form?.hasError('matchPasswords')">
+                  Les mots de passe sont <strong>différents</strong>.
+                </mat-error>
+              </mat-form-field>
+
+              <!-- same account exists -->
+              <mat-error *ngIf="existingAccount()">
+                Un compte avec le même email ou pseudo existe déjà.
+              </mat-error>
+
+              <!-- submit login -->
+              <button class="center-button mt-2" mat-stroked-button type="submit" (click)="submit(form.value)">Créer le compte</button>
+            </form>
+            <hr>
+            <!-- login link -->
+            <span>Vous avez déjà un compte ? <a routerLink="/connexion">Connectez-vous</a>.</span>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row">
+
+    <!-- all open conversations -->
+    <div class="col-md-3 margin-top">
+      <mat-card>
+        <!-- title of the card -->
+        <mat-card-title>
+          Conversations
+        </mat-card-title>
+
+        <mat-card-content>
+          <span class="content" *ngIf="openConversations.length === 0">Vous n'avez pour l'instant aucune conversation d'entamée.</span>
+
+          <mat-form-field class="example-form-field, search-bar" [floatLabel]="'never'">
+            <input (keydown.enter)="search()" matInput type="text" [(ngModel)]="searchValue" [formControl]="myControl" [matAutocomplete]="auto"/>
+            <mat-placeholder class="placeholder">Rechercher un utilisateur</mat-placeholder>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let user of filteredUsers | async" [value]="user.username" (click)="search()">
+                <img class="profil-picture-option" src="{{user.profilePicture}}" alt="{{user.username}} profile picture">
+                <span>{{user.username}}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-list *ngFor="let conversation of openConversations">
+            <mat-divider></mat-divider>
+            <a (click)="setIdConversation(conversation.id)">g
+              <mat-list-item>
+                {{ conversation.username }}
+              </mat-list-item>
+            </a>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- current conversation -->
+    <!-- current conversation -->
+    <div *ngIf="!idConversation" class="offset-md-1 col-md-6 margin-top">
+      <span class="content">Entamez une nouvelle conversation avec un utilisateur, ou choisissez une de vos discussions ouvertes sur la droite.</span>
+    </div>
+    <div *ngIf="idConversation" class="offset-md-1 col-md-6 margin-top">
+      <app-chat [id]="idConversation"></app-chat>
+    </div>
+
+  </div>
+</div>

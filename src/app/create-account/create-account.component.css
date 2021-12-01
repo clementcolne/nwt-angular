@@ -1,0 +1,66 @@
+/**
+  Center the button
+ */
+.center-button {
+  margin-left: 25%;
+  width: 50%;
+}
+
+/**
+  Center verticaly
+ */
+.center-verticaly {
+  margin-top: 40vh; /* poussé de la moitié de hauteur de viewport */
+  transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+}
+
+/**
+  Decoration of hr
+ */
+hr {
+  border: 0;
+  border-top: 1px solid #8c8c8c;
+  border-bottom: 2px solid #fff;
+  width: 60%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/**
+  Custom <a> (color + underline on hover)
+ */
+a {
+  color: #009eff;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.margin-top {
+  margin-top: 25vh;
+}
+
+.error-message{
+  line-height: 10vh;
+}
+
+mat-form-field.ng-invalid.ng-touched {
+  animation: example;
+  animation-duration: 0.3s;
+  margin-bottom: 3vh;
+}
+
+@keyframes example {
+  from {margin-bottom: 0;}
+  to {margin-bottom: 13px;}
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
