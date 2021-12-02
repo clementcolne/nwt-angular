@@ -135,7 +135,7 @@ export class NavbarComponent implements OnInit {
   }
 
   /**
-   * Return the filtered list of the follows
+   * Return the filtered list of the users
    */
   get filteredUsers(): Observable<User[]> {
     return this._filteredUsers;
@@ -230,20 +230,22 @@ export class NavbarComponent implements OnInit {
       map(name => (name ? this._filter(name) : this._users.slice())),
     );
     this._eventsSubscription = this._reloadFeedService.getEventLoadNotif().subscribe(() => this._reloadNotifs());
-    this._notifService.getNotificationsByUser(this._authService.connectedUser.id).subscribe(
-      value => {
-        if (value) {
-          this._notifs = value
-          this._notifs.map(notif => {
-            this._userService.getUserById(notif.author).subscribe(
-              user => this._authorsNotifs.set(notif, user.username)
-            )
-          })
-        } else {
-          this._notifs = [];
+    if(this._authService.isLoggedIn() && this._authService.connectedUser) {
+      this._notifService.getNotificationsByUser(this._authService.connectedUser.id).subscribe(
+        value => {
+          if (value) {
+            this._notifs = value
+            this._notifs.map(notif => {
+              this._userService.getUserById(notif.author).subscribe(
+                user => this._authorsNotifs.set(notif, user.username)
+              )
+            })
+          } else {
+            this._notifs = [];
+          }
         }
-      }
-    );
+      );
+    }
   }
 
   /**
@@ -251,7 +253,7 @@ export class NavbarComponent implements OnInit {
    * @private
    */
   private _reloadNotifs() {
-    if(this._authService.isLoggedIn()) {
+    if(this._authService.isLoggedIn() && this._authService.connectedUser) {
       this._notifService.getNotificationsByUser(this._authService.connectedUser.id).subscribe(
         value => {
           if (value) {

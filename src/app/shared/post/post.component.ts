@@ -94,7 +94,8 @@ export class PostComponent implements OnInit {
    * Sets the User author of the post
    */
   private _setAuthor(): void {
-    this._userService.getUserById(this._post.idAuthor).subscribe(value => this._author = value);
+    if(this._post.idAuthor)
+      this._userService.getUserById(this._post.idAuthor).subscribe(value => this._author = value);
   }
 
   /**

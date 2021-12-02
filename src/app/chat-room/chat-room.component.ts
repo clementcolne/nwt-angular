@@ -17,10 +17,21 @@ export class ChatRoomComponent implements OnInit {
   private _dst: number = 0;
   private _mateName: string = '';
 
+  /**
+   * Constructor of Chat room component
+   * @param _chatService Chat service to get chat data
+   * @param _authService Authentication service to get connected user information
+   * @param _route Activated route
+   * @param _userService User service to get conversation partner information
+   */
   constructor(private _chatService: ChatService, private _authService: AuthService, private _route: ActivatedRoute,
               private _userService: UserService){
   }
 
+  /**
+   * Sets the id of the conversation partner
+   * @param dst id of the user
+   */
   @Input()
   public set id(dst: number) {
     this._dst = dst;
@@ -39,18 +50,27 @@ export class ChatRoomComponent implements OnInit {
     });
   }
 
+  /**
+   * Returns true if the id of the conversation source user is the same as the connected user's one
+   * @param src id of the conversation source user
+   */
   public isAuthor(src: number): boolean {
     return this._authService.connectedUser.id === src;
   }
 
+  /**
+   * Returns the conversation partner's name
+   */
   public get mateName(): string {
     return this._mateName;
   }
 
   ngOnInit(){
-
   }
 
+  /**
+   * Create a new conversation
+   */
   addChat(){
     let payload = {
       src: this._authService.connectedUser.id,

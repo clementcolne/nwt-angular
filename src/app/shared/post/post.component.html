@@ -2,7 +2,7 @@
   <mat-card-header>
     <!-- author of the post -->
     <mat-card-title>
-      <a routerLink="profil/{{ author.username }}">{{ author.username }}</a>
+      <a routerLink="/profil/{{ author.username }}">{{ author.username }}</a>
     </mat-card-title>
     <!-- profile picture of the author -->
     <img mat-card-avatar src="{{ getProfilePicture(author) }}" alt="profile picture">
@@ -65,7 +65,7 @@
     <!-- existing comments -->
     <section>
       <section *ngIf="post.nbComments == 0" class="firstComment">
-        Sois le premier à commencer le post
+        Sois le premier à commenter ce post
       </section>
       <section *ngIf="post.nbComments != 0">
         <a *ngIf="!isCommentsLoaded" (click)="lazyLoadComments()" class="lazyLoadComments">{{ commentsLoadInfo }}</a>

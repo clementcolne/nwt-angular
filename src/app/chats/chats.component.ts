@@ -21,6 +21,12 @@ export class ChatsComponent implements OnInit {
   private _myControl = new FormControl();
   private _users: User[] = [];
 
+  /**
+   * Constructor of Chat component
+   * @param _authService Authentication service to get connected user's information
+   * @param _userService User service to get conversation partner's information
+   * @param _chatService Chat service to get chat data
+   */
   constructor(private _authService: AuthService, private _userService: UserService, private _chatService: ChatService) {
     this._filteredUsers = new Observable<User[]>();
     this._userService.getAllUsers().subscribe(
@@ -29,32 +35,52 @@ export class ChatsComponent implements OnInit {
   }
 
   /**
-   * Return the filtered list of the follows
+   * Return the filtered list of the users
    */
   get filteredUsers(): Observable<User[]> {
     return this._filteredUsers;
   }
 
+  /**
+   * Return the profile picture of a user
+   * @param user User which profile picture is to retrieve
+   */
   public getProfilePicture(user : User): string{
     return this._userService.getProfilePicture(user);
   }
 
+  /**
+   * Returns the value of _openConversations
+   */
   public get openConversations(): User[] {
     return this._openConversations;
   }
 
+  /**
+   * Sets the id conversation
+   * @param id id of the conversation
+   */
   public setIdConversation(id: number): void {
     this._idConversation = id;
   }
 
+  /**
+   * Search for the conversation with the user which username is in search bar
+   */
   public search(): void {
     this._userService.getUserByUsername(this._searchValue).subscribe(value => this._idConversation = value.id)
   }
 
+  /**
+   * Returns the value of _idConversation
+   */
   public get idConversation(): number {
     return this._idConversation;
   }
 
+  /**
+   * Returns the value of _myControl
+   */
   get myControl(): FormControl {
     return this._myControl;
   }
@@ -75,11 +101,19 @@ export class ChatsComponent implements OnInit {
     this._searchValue = value;
   }
 
+  /**
+   * Filter the users in search bar
+   * @param value text entered in searchbar
+   */
   private _filter(value: string): User[] {
     const filterValue = value.toLowerCase();
     return this._users.filter(user => user.username.toLowerCase().includes(filterValue));
   }
 
+  /**
+   * On initialization, all of the users are fetched for the search,
+   * all of the conversation of the connected user are retrieve
+   */
   ngOnInit(): void {
     this._filteredUsers = this._myControl.valueChanges.pipe(
       startWith(''),
