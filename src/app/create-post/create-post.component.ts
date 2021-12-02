@@ -29,6 +29,11 @@ export class CreatePostComponent implements OnInit {
 
   /**
    * Constructor of CreatePostComponent
+   * @param _postService Post service
+   * @param _router Router
+   * @param _dialogService Dialog Service to open dialog
+   * @param _videoService Video service
+   * @param _reloadService Reload service to load the post once created
    */
   constructor(private _postService: PostService, private _router: Router, private _dialogService: DialogService,
               private _videoService: VideoService, private _reloadService : ReloadFeedService) {

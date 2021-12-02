@@ -10,8 +10,8 @@ export class OptionsService {
   private _httpOptions : any;
 
   /**
-   * Constructor of OptionsService
-   * @param _cookies CookieService
+   * Constructor of Options service
+   * @param _cookies Cookie service to update cookies' content
    */
   constructor(private _cookies : CookieService) {
     this._httpOptions = {

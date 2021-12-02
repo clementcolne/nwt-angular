@@ -29,13 +29,11 @@ export class CreateAccountComponent implements OnInit {
   /**
    * Constructor of Connection Component
    * @param _router Router
-   * @param _userService UserService
-   * @param _authService AuthService
-   * @param _notifService
-   * @param _reloadFeedService
+   * @param _userService User service
+   * @param _authService Authentication service
+   * @param _reloadFeedService Reload service to initialize the notifications list
    */
-  constructor(private _router : Router, private _userService: UserService, private _authService: AuthService,
-              private _notifService : NotificationsService, private _reloadFeedService : ReloadFeedService) {
+  constructor(private _router : Router, private _userService: UserService, private _authService: AuthService, private _reloadFeedService : ReloadFeedService) {
     this._form = this._buildForm();
     this._errorExistingAccount = false;
     this._isPwdMatching = false;
@@ -53,6 +51,7 @@ export class CreateAccountComponent implements OnInit {
 
   /**
    * Sets the value of hide_password
+   * @param value new value of hide_password
    */
   set hide_password(value: boolean) {
     this._hide_password = value;
@@ -65,19 +64,17 @@ export class CreateAccountComponent implements OnInit {
     return this._hide_password;
   }
 
-
   /**
    * Builds the FormGroup and returns its value
    */
   private _buildForm(): FormGroup {
-    //TODO : remettre les validators en place
     return new FormGroup({
       username: new FormControl('', Validators.compose([
         Validators.required,
-        //Validators.minLength(4),
+        Validators.minLength(4),
         Validators.maxLength(30),
         // letters, min or maj, numbers, and . _ - characters
-        //Validators.pattern('^[a-zA-Z0-9._-]+$'),
+        Validators.pattern('^[a-zA-Z0-9._-]+$'),
         CustomValidators.forbiddenNameValidator(/Clement/i)
       ])),
       email: new FormControl('', Validators.compose([
@@ -86,9 +83,9 @@ export class CreateAccountComponent implements OnInit {
       ])),
       password: new FormControl('', Validators.compose([
         Validators.required,
-        ///Validators.minLength(8),
+        Validators.minLength(8),
         Validators.maxLength(30),
-        //Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&_-])[A-Za-z\\d@$!%*?&]{8,}$')
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&_-])[A-Za-z\\d@$!%*?&]{8,}$')
       ])),
         passwordConfirmed: new FormControl('', Validators.compose([
         Validators.required,
@@ -99,7 +96,7 @@ export class CreateAccountComponent implements OnInit {
   }
 
   /**
-   * Tries to connect the user
+   * Create and tries to connect the user
    * @param value
    */
   public submit(value: any): void {

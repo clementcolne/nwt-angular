@@ -14,6 +14,8 @@ export class UserService {
 
   /**
    * Constructor of User Service
+   * @param _http Http client to send http requests
+   * @param _optionsService Options service to get http header
    */
   constructor(private _http: HttpClient, private _optionsService : OptionsService) {
     this._backendURL = {};
@@ -58,6 +60,9 @@ export class UserService {
     return this._http.get<User>("http://localhost:3000/users/" + username, <Object>this._optionsService.httpOptions);
   }
 
+  /**
+   * Returns all of the users
+   */
   public getAllUsers() : Observable<User[]>{
     return this._http.get<User[]>("http://localhost:3000/users", <Object>this._optionsService.httpOptions);
   }
@@ -73,15 +78,18 @@ export class UserService {
   }
 
   /**
-   * Deletes the connected user from the database and all its datas
+   * Deletes the connected user from the database and all its data
    */
   public deleteUser(username : string): Observable<string> {
-    console.log("Suppression d'un user");
     return this._http.delete("http://localhost:3000/users/"+ username, this._optionsService.httpOptions).pipe(
       map(() => username)
     );
   }
 
+  /**
+   * Returns the profile picture path of a given user
+   * @param user user which profile picture is to retrieve
+   */
   public getProfilePicture(user : User) : string{
     return this._backendURL.public.replace(':media', user.profilePicture);
   }
@@ -94,15 +102,6 @@ export class UserService {
       "password" : password
     }
     return this._http.patch<User>("http://localhost:3000/users/"+user.username, JSON.stringify(newPass), <Object>this._optionsService.httpOptions);
-  }
-
-  /**
-   * Return true if the user (username + password) exists
-   * @param username username of the user
-   * @param password password of the user
-   */
-  public connect(username: string, password: string): Observable<any> {
-    return this._http.post("http://localhost:3000/auth/login", JSON.stringify({username, password}), this._optionsService.httpOptions);
   }
 
   /**

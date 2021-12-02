@@ -35,9 +35,16 @@ export class PostComponent implements OnInit {
 
   /**
    * Constructor of post component
+   * @param _postService Post service to get this post's information
+   * @param _commentsService Comment service to get this post's comment
+   * @param _userService User service to get author's information
+   * @param _videoService Video service to handle videos display
+   * @param _authService Authentication service to get connected user's information
+   * @param _notificationService Notification service to send comment and like notifications
+   * @param _reloadService Reload service to trigger notification relaod
    */
   constructor(private _postService: PostService, private _commentsService: CommentsService,
-              private _userService: UserService, private _sanitizer: DomSanitizer, private _videoService: VideoService,
+              private _userService: UserService, private _videoService: VideoService,
               private _authService: AuthService, private _notificationService: NotificationsService, private _reloadService : ReloadFeedService) {
     this._likeColor = "" as ThemePalette;
     this._newComment = "";
@@ -90,8 +97,10 @@ export class PostComponent implements OnInit {
     this._userService.getUserById(this._post.idAuthor).subscribe(value => this._author = value);
   }
 
+  /**
+   * Delete the post and reload the feed
+   */
   public deletePost(): void {
-    console.log("DELETE APPUYE");
     this._postService.delete(this._post.id).subscribe(
       _ => this._reloadService.emitReloadFeedEvent()
     );
@@ -104,6 +113,9 @@ export class PostComponent implements OnInit {
     return this._author;
   }
 
+  /**
+   * Share the post on twitter
+   */
   public get shareOnTwitter(): string {
     return "http://twitter.com/share?text=Just found an amazing post on Amstramgram&url=http://localhost:3000/post/" +
     this._post.id;
@@ -112,19 +124,19 @@ export class PostComponent implements OnInit {
   /**
    * Return the connected user
    */
-  public get connectedUser() {
+  public get connectedUser(): User {
     return this._authService.connectedUser;
   }
 
   /**
-   * Return true of comments are loaded, otherwise false
+   * Return true if comment is loaded, otherwise false
    */
   public get isCommentsLoaded(): boolean {
     return this._isCommentsLoaded;
   }
 
   /**
-   * Returns the sentense to display on the comment section before lazy loading
+   * Returns the sentence to display on the comment section before lazy loading
    */
   public get commentsLoadInfo(): string {
     let commentsInfo = "Charger 1 commentaire";
@@ -141,11 +153,18 @@ export class PostComponent implements OnInit {
     return this._post;
   }
 
+  /**
+   * Returns the path of the media to show
+   */
   public get getMedia(): string {
     return "http://localhost:3000/public/" + this._post.media;
   }
 
-  getProfilePicture(user: User) {
+  /**
+   * Returns the path of a user's profile picture
+   * @param user
+   */
+  getProfilePicture(user: User): string {
     if(user.profilePicture)
       return this._userService.getProfilePicture(user);
     return "http://localhost:3000/public/default/default.png"

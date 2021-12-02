@@ -14,7 +14,7 @@ export class CommentComponent implements OnInit {
 
   /**
    * Constructor of CommentComponent
-   * @param _userService UserService
+   * @param _userService User service to get authors' information
    */
   constructor(private _userService: UserService) {
     this._comment = {} as Comment;
@@ -22,7 +22,7 @@ export class CommentComponent implements OnInit {
   }
 
   /**
-   * Set the comment object
+   * Sets the comment object
    * @param comment comment object
    */
   @Input()
@@ -31,14 +31,14 @@ export class CommentComponent implements OnInit {
   }
 
   /**
-   * Return the comment
+   * Returns the comment
    */
   public get comment(): Comment {
     return this._comment;
   }
 
   /**
-   * Return the name of the author
+   * Returns the name of the author
    */
   public get authorName(): string {
     return this._authorName;

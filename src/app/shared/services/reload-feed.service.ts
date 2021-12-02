@@ -15,23 +15,29 @@ export class ReloadFeedService {
   constructor() { }
 
   /**
-   * Trigger event to all subscribed components
+   * Trigger reload posts event to all subscribed components
    */
   public emitReloadFeedEvent(): void{
     this._reloadFeedEventSubject.next();
   }
 
+  /**
+   * Trigger reload notifications event to all subscribed components
+   */
   public emitReloadNotifEvent(): void{
     this._reloadNotifEventSubject.next();
   }
 
   /**
-   * Return an observable
+   * Return an observable of the reload feed event
    */
   public getEventSubsciption(): Observable<void> {
     return this._reloadFeedEventSubject.asObservable();
   }
 
+  /**
+   * Return an observable of the reload notifications event
+   */
   public getEventLoadNotif(): Observable<void>{
     return this._reloadNotifEventSubject.asObservable();
   }

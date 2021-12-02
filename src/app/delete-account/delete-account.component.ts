@@ -13,6 +13,10 @@ export class DeleteAccountComponent implements OnInit {
 
   /**
    * Constructor of DeleteAccount component
+   * @param _userService User service
+   * @param _dialogService Dialog service to open dialog
+   * @param _router Router
+   * @param _authService Authentication service to get information of the connected user
    */
   constructor(private _userService: UserService, private _dialogService: DialogService, private _router: Router, private _authService : AuthService) { }
 

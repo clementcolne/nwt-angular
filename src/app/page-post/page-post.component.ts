@@ -12,6 +12,12 @@ export class PagePostComponent implements OnInit {
 
   private _post : Post;
 
+  /**
+   * Constructor of Page Post Component
+   * @param _route Activated route
+   * @param _postService Post service to get information of the post to show
+   * @param _router Route
+   */
   constructor(private _route : ActivatedRoute, private _postService : PostService, private _router : Router) {
     this._post = {} as Post;
   }

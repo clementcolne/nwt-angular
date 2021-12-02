@@ -25,7 +25,7 @@
 
           <mat-list *ngFor="let conversation of openConversations">
             <mat-divider></mat-divider>
-            <a (click)="setIdConversation(conversation.id)">g
+            <a (click)="setIdConversation(conversation.id)">
               <mat-list-item>
                 {{ conversation.username }}
               </mat-list-item>
@@ -35,7 +35,6 @@
       </mat-card>
     </div>
 
-    <!-- current conversation -->
     <!-- current conversation -->
     <div *ngIf="!idConversation" class="offset-md-1 col-md-6 margin-top">
       <span class="content">Entamez une nouvelle conversation avec un utilisateur, ou choisissez une de vos discussions ouvertes sur la droite.</span>

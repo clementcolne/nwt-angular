@@ -9,7 +9,8 @@ export class VideoService {
   private _URL = window.URL;
 
   /**
-   * Constructor of VideoService
+   * Constructor of Video service
+   * @param _sanitizer DomSanitizer
    */
   constructor(private _sanitizer: DomSanitizer) { }
 

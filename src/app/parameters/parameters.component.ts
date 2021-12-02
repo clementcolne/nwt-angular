@@ -17,8 +17,6 @@ export class ParametersComponent implements OnInit {
   private readonly _form: FormGroup;
   private _imgUrl: string;
   private _errorExistingAccount : boolean;
-  private _usernameControl = new FormControl();
-  private _emailControl = new FormControl();
   private _descriptionControl = new FormControl();
   private _dataChanged : boolean;
   private _pictureChanged : boolean;
@@ -27,6 +25,10 @@ export class ParametersComponent implements OnInit {
 
   /**
    * Constructor of ParametersComponent
+   * @param _userService User service to fetch user information
+   * @param _router Router
+   * @param _dialogService Dialog service to open password update dialog
+   * @param _authService Authentication service to get connected user information
    */
   constructor(private _userService: UserService, private _router: Router, private _dialogService: DialogService, private _authService : AuthService) {
     this._form = this._buildForm();
@@ -67,6 +69,9 @@ export class ParametersComponent implements OnInit {
     return this._authService.connectedUser.isPrivate;
   }
 
+  /**
+   * Return _privacyChanged
+   */
   public get privacyChanged(): boolean {
     return this._privacyChanged;
   }
@@ -118,14 +123,23 @@ export class ParametersComponent implements OnInit {
 
   }
 
+  /**
+   * Return _dataChanged
+   */
   get dataChanged(): boolean {
     return this._dataChanged;
   }
 
+  /**
+   * Return _pictureChanged
+   */
   get pictureChanged(): boolean {
     return this._pictureChanged;
   }
 
+  /**
+   * Return _errorExistingAccount
+   */
   get errorExistingAccount(): boolean {
     return this._errorExistingAccount;
   }
@@ -185,18 +199,16 @@ export class ParametersComponent implements OnInit {
     return this._form;
   }
 
-  get usernameControl(): FormControl {
-    return this._usernameControl;
-  }
-
-  get emailControl(): FormControl {
-    return this._emailControl;
-  }
-
+  /**
+   * Return _descriptionControl
+   */
   get descriptionControl(): FormControl {
     return this._descriptionControl;
   }
 
+  /**
+   * On initialization, the user information loaded
+   */
   ngOnInit(): void {
     // fill the form
     this._form.patchValue(this._authService.connectedUser);

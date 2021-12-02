@@ -10,10 +10,11 @@ import {HttpClient} from "@angular/common/http";
 })
 export class PostService {
 
-  private _posts: Post[] = [];
-
   /**
-   * Constructor of PostService
+   * Constructor of Post service
+   * @param _authService Authentication service to get connected user information
+   * @param _optionsService Options service to get http header
+   * @param _http Http client to send http requests
    */
   constructor(private _authService : AuthService, private _optionsService : OptionsService, private _http: HttpClient) {
   }
@@ -37,6 +38,10 @@ export class PostService {
     this._http.patch<any>("http://localhost:3000/posts/" + idPost, JSON.stringify(payloadLike), this._optionsService.httpOptions).subscribe();
   }
 
+  /**
+   * Delete a post
+   * @param id id of the post
+   */
   public delete(id: number): Observable<any> {
     return this._http.delete<any>("http://localhost:3000/posts/" + id, this._optionsService.httpOptions);
   }
@@ -117,24 +122,6 @@ export class PostService {
    */
   public getNbComments(postId: number): Observable<Post> {
     return this._http.get<Post>("http://localhost:3000/posts/" + postId, <Object>this._optionsService.httpOptions);
-  }
-
-  /**
-   * Returns a unique ID for this post
-   */
-  private _generateId(): number {
-    return this._posts[this._posts.length - 1].id++;
-  }
-
-  /**
-   * Increments the number of comments for a given post
-   * @param postId id of the post
-   */
-  public addComment(postId: number): void {
-    let post = this._posts.find(post => post.id == postId);
-    if(post !== undefined) {
-      post.nbComments += 1;
-    }
   }
 
 }

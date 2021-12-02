@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit {
   /**
    * Constructor of Connection Component
    * @param _router Router
-   * @param _authService AuthService
-   * @param _notifService
-   * @param _reloadFeedService
+   * @param _authService Authentication service to get information of the connected user
+   * @param _notifService Notification service to fetch the notifications of the connected user
+   * @param _reloadFeedService Reload service to trigger the notification load event
    */
   constructor(private _router : Router, private _authService: AuthService, private _notifService : NotificationsService, private _reloadFeedService: ReloadFeedService) {
     this._form = this._buildForm();
@@ -64,7 +64,6 @@ export class LoginComponent implements OnInit {
         this._authService.saveToken(data);
         this._authService.saveUser(value);
         this._reloadFeedService.emitReloadNotifEvent();
-        //this._notifService.loadNotifications(value.username);
         this._router.navigate([""]).then();
       },
       //Else, the error is handled as per the status code
@@ -82,14 +81,16 @@ export class LoginComponent implements OnInit {
     return this._errorConnection;
   }
 
-  get errorStatusCode(): number {
-    return this._errorStatusCode;
-  }
-
+  /**
+   * Return the value of _hidePassword
+   */
   public get hidePassword(): boolean {
     return this._hidePassword;
   }
 
+  /**
+   * Set the value of _hidePassword
+   */
   public set hidePassword(value: boolean) {
     this._hidePassword = value;
   }

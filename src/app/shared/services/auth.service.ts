@@ -14,6 +14,13 @@ export class AuthService {
 
   private _connectedUser: User;
 
+  /**
+   * Constructor of Authentication service
+   * @param _http Http Client to send http requests
+   * @param _userService User service to get user information
+   * @param _cookies Cookie service to update cookies
+   * @param _optionsService Options service to get http header
+   */
   constructor(private _http: HttpClient, private _userService : UserService, private _cookies : CookieService, private _optionsService : OptionsService) {
     this._connectedUser = localStorage.getItem('userConnected') ? JSON.parse(<string>localStorage.getItem('userConnected')) : {};
   }
@@ -30,20 +37,13 @@ export class AuthService {
   /**
    * Save the JWS Token in the cookie 'Authorization'
    * Add the header 'Authorization' in http options
-   * Update Userservice http options
+   * Update User service http options
    * @param token JWS Token
    */
   public saveToken(token: any): void {
     //Cookie handle
     this._cookies.delete("Authorization");
     this._cookies.set("Authorization", token.access_token);
-  }
-
-  /**
-   * Return the cookie 'Authorization' which contains the JWS token if it exists
-   */
-  public getToken(): string | null {
-    return this._cookies.get("Authorization");
   }
 
   /**
@@ -97,11 +97,16 @@ export class AuthService {
    * @param email new email
    * @param description new description of the profile
    * @param profilePictureUrl new profile picture
+   * @param isPrivate new private status
    */
   public updateConnectedUser(username: string, email: string, description: string, profilePictureUrl: string, isPrivate: boolean): Observable<User> {
     return this._userService.updateUser(this._connectedUser, username, email, description, profilePictureUrl, isPrivate);
   }
 
+  /**
+   * Update the connected user password
+   * @param password new password
+   */
   updateConnectedUserPassword(password : string) : Observable<User> {
     return this._userService.updatePassword(this.connectedUser, password);
   }

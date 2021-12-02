@@ -29,6 +29,14 @@ export class ProfileComponent implements OnInit {
 
   /**
    * Constructor of ProfileComponent
+   * @param _postService Post service to get posts of the user
+   * @param _userService User service to get user information
+   * @param _route Activated Route
+   * @param _authService Authentication service to know if this profile is the one of the connected user
+   * @param _followService Follow service to handle the subscribe button
+   * @param _notificationService Notification service to handle subscribe notification
+   * @param _reloadService Reload service to only show posts that haven't been deleted
+   * @param _router Router
    */
   constructor(private _postService: PostService, private _userService: UserService, private _route: ActivatedRoute,
               private _authService : AuthService, private _followService: FollowService,
@@ -51,11 +59,16 @@ export class ProfileComponent implements OnInit {
     return this.isAccessible ? this._posts : [];
   }
 
-
+  /**
+   * Return the number of posts on this profile
+   */
   public getNbPosts(): number{
     return this._posts.length;
   }
 
+  /**
+   * Return true if the profile is visible by the connected user
+   */
   public get isAccessible(): boolean{
     return this._isAccessible || this.isConnectedUserAccount();
   }
@@ -74,23 +87,25 @@ export class ProfileComponent implements OnInit {
     return this._follow;
   }
 
-  private _reloadFeed() {
+  /**
+   * Reload the posts to show
+   */
+  private _reloadFeed(): void {
     this._postService.fetchAllByUser(this._user.id).subscribe(
       posts => {
-        console.log(posts)
         this._posts = posts ? posts.reverse() : [];
       }
     );
   }
 
+  /**
+   * Return the path of the profile picture of a given user
+   * @param user user to get profile picture of
+   */
   public getProfilePicture(user : User): string {
     if(user.profilePicture)
       return this._userService.getProfilePicture(user);
     return "http://localhost:3000/public/default/default.png"
-  }
-
-  public get profilePicture(){
-    return this._userService.getProfilePicture(this.user);
   }
 
   /**
@@ -112,13 +127,6 @@ export class ProfileComponent implements OnInit {
       this._follow = "S'abonner";
       this._isAccessible = !this._user.isPrivate;
     }
-  }
-
-  /**
-   * Navigate to chat-room discussion and set the id of the person to chat-room with
-   */
-  public onChat() {
-    this._router.navigate(['/chat-room/' + this._user.id]).then();
   }
 
   /**

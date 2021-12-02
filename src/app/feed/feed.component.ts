@@ -19,6 +19,10 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   /**
    * Constructor of Home
+   * @param _postService Post service to get information of the posts to show
+   * @param _reloadFeedService Reload service to reload the actual list of posts to show
+   * @param _followService Follow service to decide which user's posts to show
+   * @param _authService Authentication service to get information of the connected user
    */
   constructor(private _postService: PostService, private _reloadFeedService: ReloadFeedService,
               private _followService : FollowService, private _authService : AuthService) {
@@ -46,7 +50,8 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * At initialisation, load posts
+   * At initialisation, the posts are loaded
+   * and then filter by the follows of the connected user
    */
   ngOnInit(): void {
     this._postService.fetchAll().subscribe(

@@ -11,6 +11,7 @@ export class DialogService {
 
   /**
    * Constructor of DialogService
+   * @param _dialog service to open dialogs
    */
   constructor(private _dialog: MatDialog) { }
 

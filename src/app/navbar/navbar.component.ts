@@ -6,7 +6,7 @@ import {UserService} from "../shared/services/user.service";
 import {User} from "../shared/types/user.type";
 import {FormControl} from "@angular/forms";
 import {Observable, Subscription} from "rxjs";
-import {defaultIfEmpty, map, startWith} from "rxjs/operators";
+import {map, startWith} from "rxjs/operators";
 import {Notification} from "src/app/shared/types/notification.type";
 import {AuthService} from "../shared/services/auth.service";
 import {NotificationsService} from "../shared/services/notifications.service";
@@ -30,6 +30,15 @@ export class NavbarComponent implements OnInit {
   private _eventsSubscription: Subscription;
   private _authorsNotifs: Map<Notification, string>;
 
+  /**
+   * Constructor of Navbar Component
+   * @param _router Router
+   * @param _reloadFeedService Reload service to update notifications
+   * @param _dialogService Dialog service to open creation post dialog
+   * @param _userService User service to get information of all of the users
+   * @param _authService Authentication service to get information of the connected user
+   * @param _notifService Notification service to get notifications
+   */
   constructor(private _router: Router, private _reloadFeedService: ReloadFeedService, private _dialogService: DialogService,
               private _userService: UserService, private _authService : AuthService, private _notifService : NotificationsService) {
     this._searchValue = "";
@@ -48,6 +57,10 @@ export class NavbarComponent implements OnInit {
     setInterval(()=> { this._reloadNotifs() }, 3000);
   }
 
+  /**
+   * Set the notification in parameter to read
+   * @param notif notification read
+   */
   public readNotifs(notif : Notification): void{
     this._notifService.updateNotification(notif.id).subscribe(
       _ => {
@@ -56,6 +69,9 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  /**
+   * Return the number of unread notifications
+   */
   get nbUnreadNotif(): number{let cpt = 0;
     this._notifs.map(n => {
       cpt += !n.isRead ? 1 : 0
@@ -63,14 +79,24 @@ export class NavbarComponent implements OnInit {
     return cpt;
   }
 
+  /**
+   * Return the list of the notifications of the connected user
+   */
   get notifs(): Notification[] {
     return this._notifs.reverse();
   }
 
+  /**
+   * Return path to a user profile picture
+   * @param user User to get profile picture of
+   */
   public getProfilePicture(user : User): string{
     return this._userService.getProfilePicture(user);
   }
 
+  /**
+   * Return path to user connected profile picture
+   */
   get profilePicture() : string{
     return this._userService.getProfilePicture(this._authService.connectedUser);
   }
@@ -115,6 +141,9 @@ export class NavbarComponent implements OnInit {
     return this._filteredUsers;
   }
 
+  /**
+   * Return _myControl
+   */
   get myControl(): FormControl {
     return this._myControl;
   }
@@ -164,23 +193,37 @@ export class NavbarComponent implements OnInit {
     return this._authService.connectedUser;
   }
 
+  /**
+   * Filter the users in search bar
+   * @param value text entered in searchbar
+   */
   private _filter(value: string): User[] {
     const filterValue = value.toLowerCase();
     return this._users.filter(user => user.username.toLowerCase().includes(filterValue));
   }
 
+  /**
+   * Disconnect the connected user
+   */
   public deconnexion(): void {
     this._clickedSearch = false;
     this._authService.deconnexion();
     this._router.navigate(["connexion"]).then();
   }
 
+  /**
+   * Return the author name of the content of the notification in parameter
+   * @param notif notification to find author's name content
+   */
   public getAuthorName(notif : Notification) : string |  undefined{
     return this._authorsNotifs.get(notif);
   }
 
+  /**
+   * On initialisation, the filter is initialized,
+   * the notifications of the connected user are loaded
+   */
   ngOnInit(): void {
-    this._notifService.loadNotifications(this._authService.connectedUser.username);
     this._filteredUsers = this._myControl.valueChanges.pipe(
       startWith(''),
       map(value => (typeof value === 'string' ? value : value.name)),
@@ -203,6 +246,10 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  /**
+   * Reload notifications of the connected user
+   * @private
+   */
   private _reloadNotifs() {
     if(this._authService.isLoggedIn()) {
       this._notifService.getNotificationsByUser(this._authService.connectedUser.id).subscribe(

@@ -18,7 +18,6 @@
               <!-- display follow button if not connected user's account -->
               <ng-container *ngIf="!isConnectedUserAccount()">
                 <button class="follow" mat-stroked-button (click)="onFollow()">{{ follow }}</button>
-                <button class="follow" mat-stroked-button (click)="onChat()">Ecrire</button>
               </ng-container>
               <!-- profile informations -->
               <div class="mt-4">

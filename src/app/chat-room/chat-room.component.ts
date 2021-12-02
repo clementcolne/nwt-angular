@@ -4,7 +4,6 @@ import {AuthService} from "../shared/services/auth.service";
 import {Message} from "../shared/types/message.type";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../shared/services/user.service";
-import {Post} from "../shared/types/post.type";
 
 @Component({
   selector: 'app-chat',

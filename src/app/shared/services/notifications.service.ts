@@ -11,16 +11,22 @@ import {UserService} from "./user.service";
 })
 export class NotificationsService {
 
-  private _notifsLoaded : Notification[];
-  private _authorsNotifs : Map<Notification, string>;
-  private _unreadNotifs: number;
-
+  /**
+   * Constructor of Notification service
+   * @param _http Http client to send http requests
+   * @param _optionsService Options service to get http header
+   * @param _authService Authentication service to get connected user information
+   * @param _userService User service to get user information
+   */
   constructor(private _http: HttpClient, private _optionsService : OptionsService, private _authService : AuthService, private _userService: UserService) {
-    this._notifsLoaded = [];
-    this._authorsNotifs = new Map<Notification, string>();
-    this._unreadNotifs = 0;
   }
 
+  /**
+   * Create a new notification
+   * @param recipient recipient of the notification
+   * @param content id of the content of the notification (user or post)
+   * @param type type of notification (like, comment or follow)
+   */
   public sendNotification(recipient: number, content: string, type: string) {
     let payload = {
       recipient: recipient,
@@ -33,50 +39,20 @@ export class NotificationsService {
       <Object>this._optionsService.httpOptions).subscribe();
   }
 
+  /**
+   * Returns an Observable of all the notifications for a given user
+   * @param id id of the user
+   */
   public getNotificationsByUser(id: number) : Observable<Notification[]>{
     return this._http.get<Notification[]>("http://localhost:3000/notifications/"+id, <Object>this._optionsService.httpOptions);
   }
 
+  /**
+   * Update the read status of a given notification
+   * @param id id of the notification
+   */
   public updateNotification(id: number) : Observable<Notification>{
     let payload;
-    this._unreadNotifs--;
     return this._http.patch<Notification>("http://localhost:3000/notifications/"+id, payload, <Object>this._optionsService.httpOptions);
-  }
-
-  public getNbUnreadNotifs(){
-    let cpt = 0;
-    this._notifsLoaded.map(n => {
-      cpt += !n.isRead ? 1 : 0
-    });
-    return cpt;
-  }
-
-  public loadNotifications(username : string) : void {
-    this._userService.getUserByUsername(username).subscribe(
-      user => {
-        this.getNotificationsByUser(user.id).subscribe(
-          value => {
-            if (value) {
-              this._notifsLoaded = value
-              this._notifsLoaded.map(notif => {
-                this._userService.getUserById(notif.author).subscribe(
-                  user => this._authorsNotifs.set(notif, user.username)
-                )
-              })
-            } else {
-              this._notifsLoaded = [];
-            }
-          }
-        )
-      }
-    );
-  }
-
-  public get notifsLoaded() : Notification[]{
-    return this._notifsLoaded
-  }
-
-  public getAuthorName(not : Notification) : string | undefined{
-    return this._authorsNotifs.get(not);
   }
 }

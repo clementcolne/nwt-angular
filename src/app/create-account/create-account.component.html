@@ -20,14 +20,14 @@
                 <mat-error *ngIf="form.get('username')?.dirty && form.get('username')?.hasError('required')">
                   Un pseudo est <strong>requis</strong>.
                 </mat-error>
-                <!-- error if wrong size of username
+                <!-- error if wrong size of username -->
                 <mat-error *ngIf="form.get('username')?.dirty && (form.get('username')?.hasError('minlength') || form.get('username')?.hasError('maxlength'))">
                   La taille du pseudo doit être entre <strong>4 et 30 caractères</strong>.
-                </mat-error>-->
-                <!-- error if wrong pattern of username
+                </mat-error>
+                <!-- error if wrong pattern of username -->
                 <mat-error *ngIf="form.get('username')?.dirty && form.get('username')?.hasError('pattern')">
                   Le pseudo ne peut contenir que des <strong>lettres minuscule, majuscule, chiffres et - _ ou .</strong>
-                </mat-error>-->
+                </mat-error>
                 <!-- easter egg, did you find it ? -->
                 <mat-error *ngIf="form.get('username')?.dirty && form.get('username')?.hasError('forbiddenName')">
                   Tu as trouvé un Easter Egg, tu ne peux pas t'appeler Clément ;)
@@ -58,14 +58,14 @@
                 <mat-error *ngIf="form.get('password')?.dirty && form.get('password')?.hasError('required')">
                   Un mot de passe est <strong>requis</strong>.
                 </mat-error>
-                <!-- error if password doesn't match the pattern
+                <!-- error if password doesn't match the pattern-->
                 <mat-error *ngIf="form.get('password')?.dirty && form.get('password')?.hasError('pattern')">
                   Le mot de passe doit contenir au moins une <strong>lettre minuscule</strong>, une <strong>lettre majuscule</strong>, un <strong>chiffre</strong> et un <strong>caractère spécial</strong>.
-                </mat-error>-->
-                <!-- error if wrong size of password
+                </mat-error>
+                <!-- error if wrong size of password -->
                 <mat-error *ngIf="form.get('password')?.dirty && (form.get('password')?.hasError('minlength') || form.get('password')?.hasError('maxlength'))">
                   La taille du pseudo doit être entre <strong>8 et 30 caractères</strong>.
-                </mat-error> -->
+                </mat-error>
               </mat-form-field>
 
               <!-- password confirm -->

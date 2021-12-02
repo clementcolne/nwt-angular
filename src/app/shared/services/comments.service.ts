@@ -13,13 +13,17 @@ export class CommentsService {
 
   /**
    * Constructor of comments service
+   * @param _postService Post service to get post information
+   * @param _authService Authentication service to get connected user information
+   * @param _http Http client to send http requests
+   * @param _optionsService Options service to get http header
    */
   constructor(private _postService: PostService, private _authService : AuthService,
               private _optionsService: OptionsService, private _http: HttpClient) {
   }
 
   /**
-   * Returns the list of all comments
+   * Returns the list of all comments for a given post
    * @param idPost is of the parent post
    */
   public fetchAll(idPost: number): Observable<Comment[]> {

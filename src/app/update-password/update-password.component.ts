@@ -15,7 +15,12 @@ export class UpdatePasswordComponent implements OnInit {
   private readonly _form: FormGroup;
   private _hidePassword : boolean;
 
-  constructor(private _dialogService: DialogService, private _userService: UserService, private _authService : AuthService) {
+  /**
+   * Constructor of Update Password Component
+   * @param _dialogService Dialog service to open the password update dialog
+   * @param _authService Authentication service to update connected user information
+   */
+  constructor(private _dialogService: DialogService, private _authService : AuthService) {
     this._form = this._buildForm();
     this._hidePassword = true;
   }
@@ -31,6 +36,9 @@ export class UpdatePasswordComponent implements OnInit {
 
   }
 
+  /**
+   * Cancel update and close dialog
+   */
   public cancel(): void {
     this._dialogService.closeDialogService();
   }
@@ -61,11 +69,17 @@ export class UpdatePasswordComponent implements OnInit {
     return this._form;
   }
 
-
+  /**
+   * Returns the value of _hidePassword
+   */
   get hidePassword(): boolean {
     return this._hidePassword;
   }
 
+  /**
+   * Sets the value of _hidePassword
+   * @param value new value of _hidePassword
+   */
   set hidePassword(value: boolean) {
     this._hidePassword = value;
   }

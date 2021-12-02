@@ -11,11 +11,16 @@ import {User} from "../types/user.type";
 })
 export class FollowService {
 
+  /**
+   * Constructor of Follow service
+   * @param _http Http client to send http requests
+   * @param _optionsService Options service to get http header
+   * @param _authService Authentication service to get connected user information
+   */
   constructor(private _http: HttpClient, private _optionsService : OptionsService, private _authService: AuthService) { }
 
   /**
    * Follow the specified user in parameter
-   * @param id id of the user to follow
    * @param followedUser user to follow
    */
   public follow(followedUser: User): Observable<User> {
