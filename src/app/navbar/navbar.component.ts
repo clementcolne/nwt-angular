@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit {
     this._unreadNotifs = 0;
     this._eventsSubscription = {} as Subscription;
     this._authorsNotifs = new Map<Notification, string>();
-    //setInterval(()=> { this._reloadNotifs() }, 3000);
+    setInterval(()=> { this._reloadNotifs() }, 3000);
   }
 
   public readNotifs(notif : Notification): void{
@@ -204,20 +204,21 @@ export class NavbarComponent implements OnInit {
   }
 
   private _reloadNotifs() {
-    console.log("JE RELOAD");
-    this._notifService.getNotificationsByUser(this._authService.connectedUser.id).subscribe(
-      value => {
-        if (value) {
-          this._notifs = value
-          this._notifs.map(notif => {
-            this._userService.getUserById(notif.author).subscribe(
-              user => this._authorsNotifs.set(notif, user.username)
-            )
-          })
-        } else {
-          this._notifs = [];
+    if(this._authService.isLoggedIn()) {
+      this._notifService.getNotificationsByUser(this._authService.connectedUser.id).subscribe(
+        value => {
+          if (value) {
+            this._notifs = value
+            this._notifs.map(notif => {
+              this._userService.getUserById(notif.author).subscribe(
+                user => this._authorsNotifs.set(notif, user.username)
+              )
+            })
+          } else {
+            this._notifs = [];
+          }
         }
-      }
-    );
+      );
+    }
   }
 }

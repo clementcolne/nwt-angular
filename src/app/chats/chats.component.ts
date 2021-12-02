@@ -35,6 +35,10 @@ export class ChatsComponent implements OnInit {
     return this._filteredUsers;
   }
 
+  public getProfilePicture(user : User): string{
+    return this._userService.getProfilePicture(user);
+  }
+
   public get openConversations(): User[] {
     return this._openConversations;
   }
@@ -77,6 +81,12 @@ export class ChatsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._filteredUsers = this._myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : value.name)),
+      map(name => (name ? this._filter(name) : this._users.slice())),
+    );
+
     this._chatService.getOpenConversations(this._authService.connectedUser.id).subscribe(value => {
       for(let message of value) {
         this._userService.getUserById(message.src).subscribe(value2 => {
@@ -93,11 +103,6 @@ export class ChatsComponent implements OnInit {
         )
       }
     })
-    this._filteredUsers = this._myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => (typeof value === 'string' ? value : value.name)),
-      map(name => (name ? this._filter(name) : this._users.slice())),
-    );
   }
 
 }

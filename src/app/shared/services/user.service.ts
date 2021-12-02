@@ -37,7 +37,8 @@ export class UserService {
     let user = {
       "username": String(value.username),
       "email": String(value.email),
-    } as User;
+      "password": String(value.password)
+    };
     return this._http.post<User>("http://localhost:3000/users", JSON.stringify(user), this._optionsService.httpOptions);
   }
 

@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../shared/services/auth.service";
 import {NotificationsService} from "../shared/services/notifications.service";
+import {ReloadFeedService} from "../shared/services/reload-feed.service";
 
 @Component({
   selector: 'app-connection',
@@ -21,9 +22,10 @@ export class LoginComponent implements OnInit {
    * Constructor of Connection Component
    * @param _router Router
    * @param _authService AuthService
-   * @param _notifService NotificationService
+   * @param _notifService
+   * @param _reloadFeedService
    */
-  constructor(private _router : Router, private _authService: AuthService, private _notifService : NotificationsService) {
+  constructor(private _router : Router, private _authService: AuthService, private _notifService : NotificationsService, private _reloadFeedService: ReloadFeedService) {
     this._form = this._buildForm();
     this._errorConnection = false;
     this._errorStatusCode = 0;
@@ -61,7 +63,8 @@ export class LoginComponent implements OnInit {
       data => {
         this._authService.saveToken(data);
         this._authService.saveUser(value);
-        this._notifService.loadNotifications(value.username);
+        this._reloadFeedService.emitReloadNotifEvent();
+        //this._notifService.loadNotifications(value.username);
         this._router.navigate([""]).then();
       },
       //Else, the error is handled as per the status code

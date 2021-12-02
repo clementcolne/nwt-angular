@@ -6,6 +6,7 @@ import {CustomValidators} from "../shared/validators/account-validator";
 import {User} from "../shared/types/user.type";
 import {AuthService} from "../shared/services/auth.service";
 import {NotificationsService} from "../shared/services/notifications.service";
+import {ReloadFeedService} from "../shared/services/reload-feed.service";
 
 @Component({
   selector: 'app-create-account',
@@ -31,8 +32,10 @@ export class CreateAccountComponent implements OnInit {
    * @param _userService UserService
    * @param _authService AuthService
    * @param _notifService
+   * @param _reloadFeedService
    */
-  constructor(private _router : Router, private _userService: UserService, private _authService: AuthService, private _notifService : NotificationsService) {
+  constructor(private _router : Router, private _userService: UserService, private _authService: AuthService,
+              private _notifService : NotificationsService, private _reloadFeedService : ReloadFeedService) {
     this._form = this._buildForm();
     this._errorExistingAccount = false;
     this._isPwdMatching = false;
@@ -107,7 +110,8 @@ export class CreateAccountComponent implements OnInit {
           data => {
             this._authService.saveToken(data);
             this._authService.saveUser(value);
-            this._notifService.loadNotifications(value.username);
+            this._reloadFeedService.emitReloadNotifEvent();
+            //this._notifService.loadNotifications(value.username);
             this._router.navigate([""]).then();
           }
         );
